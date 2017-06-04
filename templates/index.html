@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta Http-Equiv="Cache-Control" Content="no-cache">
+    <meta Http-Equiv="Pragma" Content="no-cache">
+    <meta Http-Equiv="Expires" Content="0">
+    <meta Http-Equiv="Pragma-directive: no-cache">
+    <meta Http-Equiv="Cache-directive: no-cache">
+
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/RandomImage.css">
+
+    <title>RandomImager </title>
+
+
+</head>
+
+<body>
+    <h1> Random Image App </h1>
+
+<!--
+    <div id="buttons">
+
+        <p>
+            <h3> Kick Off Random Image </h3>
+            <button id="startRandomImage" > Start Random Images  </button>
+
+            <h3> Stop Random Images </h3>
+            <button id="stopRandomImages" > Stop Random Images  </button>
+        </p>
+
+    </div>
+-->
+
+    <div id="imagesDiv">
+        <!-- dynamically display images from DB here -->
+    </div>
+
+    <script>
+
+	
+	function randomise_image() {
+            // This will randomly display images in the imagesDiv, then clear it
+
+            var random_number = Math.floor((Math.random() * 29933) + 1);
+	    // Create random query string in an  attempt to stop caching
+            var random_url = "http://10.8.253.109:8082/randomimage" + "?dummy=" + random_number;
+
+            var actionPost =  '{ "action" : "start-ranimage" }';
+            jsonActionPost = JSON.parse(actionPost);
+            actionAjax(jsonActionPost, random_url);
+            $('#imagesDiv').empty()
+
+        }
+
+
+//        function randomise_image() {
+//            // This will randomly display images in the imagesDiv, then clear it
+//
+//            var actionPost =  '{ "action" : "start-ranimage" }';
+//            jsonActionPost = JSON.parse(actionPost);
+//            actionAjax(jsonActionPost);
+//            $('#imagesDiv').empty()
+
+//        }
+
+
+        setInterval("randomise_image()", 3500 );
+
+
+        function actionAjax(jsonActionPost, random_url1) {
+
+            /* ajax call to flask webserver */
+
+            $.ajax({
+                url: random_url1,
+                type: 'post',
+                crossDomain: false,
+                dataType: 'json',
+                data: jsonActionPost,
+                success: function(results){
+                    // Flask server return current state of video stream
+                    $('#imagesDiv').append('<img src=  "' + results.message + '"  alt="Random Images" height="600" width="800"/>') }
+
+            });
+
+        }
+
+        $(document).ready(function() {
+            $("#clearButton").click(function(){
+                $('#imagesDiv').empty()
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>

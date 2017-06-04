@@ -19,20 +19,6 @@
 <body>
     <h1> Random Image App </h1>
 
-<!--
-    <div id="buttons">
-
-        <p>
-            <h3> Kick Off Random Image </h3>
-            <button id="startRandomImage" > Start Random Images  </button>
-
-            <h3> Stop Random Images </h3>
-            <button id="stopRandomImages" > Stop Random Images  </button>
-        </p>
-
-    </div>
--->
-
     <div id="imagesDiv">
         <!-- dynamically display images from DB here -->
     </div>
@@ -53,17 +39,6 @@
             $('#imagesDiv').empty()
 
         }
-
-
-//        function randomise_image() {
-//            // This will randomly display images in the imagesDiv, then clear it
-//
-//            var actionPost =  '{ "action" : "start-ranimage" }';
-//            jsonActionPost = JSON.parse(actionPost);
-//            actionAjax(jsonActionPost);
-//            $('#imagesDiv').empty()
-
-//        }
 
 
         setInterval("randomise_image()", 3500 );

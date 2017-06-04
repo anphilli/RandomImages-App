@@ -12,6 +12,17 @@ from random import randint
 app = Flask(__name__)
 
 
+# No cacheing at all for API endpoints.
+@app.after_request
+def add_header(response):
+    # response.cache_control.no_store = True
+    if 'Cache-Control' not in response.headers:
+        response.headers['Cache-Control'] = 'no-store'
+    return response
+
+
+
+
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.debug = True
 
